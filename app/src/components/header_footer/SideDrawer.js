@@ -2,37 +2,49 @@ import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import { scroller } from 'react-scroll';
 
 const SideDrawer = (props) => {
-  return (
-    <Drawer
-      anchor="right"
-      open={props.open}
-      onClose={() => props.onClose(false)}
-    >
-      <List component="nav">
-          <ListItem button onClick={() => console.log('Features')}>
-              Events Starts in
-          </ListItem>
 
-          <ListItem button onClick={() => console.log('Venue INFO')}>
-              Venue INFO
-          </ListItem>
+    const scrollToElement = (element) => {
+        scroller.scrollTo(element, {
+            duration: 1500,
+            delay: 100,
+            smooth: true,
+            offset: -100
+        });
+        props.onClose(false);
+    }
 
-          <ListItem button onClick={() => console.log('Highlights')}>
-              Highlights
-          </ListItem>
+    return (
+        <Drawer
+        anchor="right"
+        open={props.open}
+        onClose={() => props.onClose(false)}
+        >
+        <List component="nav">
+            <ListItem button onClick={() => scrollToElement('Features')}>
+                Events Starts in
+            </ListItem>
 
-          <ListItem button onClick={() => console.log('Pricing')}>
-              Pricing
-          </ListItem>
+            <ListItem button onClick={() => scrollToElement('VenueNFO')}>
+                Venue INFO
+            </ListItem>
 
-          <ListItem button onClick={() => console.log('Location')}>
-              Location
-          </ListItem>
-      </List>
-    </Drawer>
-  )
+            <ListItem button onClick={() => scrollToElement('highlights')}>
+                Highlights
+            </ListItem>
+
+            <ListItem button onClick={() => scrollToElement('Pricing')}>
+                Pricing
+            </ListItem>
+
+            <ListItem button onClick={() => scrollToElement('Location')}>
+                Location
+            </ListItem>
+        </List>
+        </Drawer>
+    )
 }
 
 export default SideDrawer
