@@ -4,10 +4,39 @@ import Slide from 'react-reveal/Slide';
 export default class CountDown extends Component {
 
     state = {
+        deadLine: 'Dec, 26, 2020',
+        days: '0',
+        hours: '0',
+        minutes: '0',
+        seconds: '0'
+    }
 
+    getCountDown() {
+        const { deadLine } = this.state;
+        const time = Date.parse(deadLine) - Date.parse(new Date());
+        if(time < 0) {
+            console.log('Date passed')
+        } else {
+            const sec = Math.floor((time/1000) % 60);
+            const min = Math.floor((time/1000/60) % 60);
+            const hrs = Math.floor((time/(1000*60*60)) % 24);
+            const dys = Math.floor(time/(1000*60*60*24));
+
+            this.setState({
+                days: dys,
+                seconds: sec,
+                minutes: min,
+                hours: hrs
+            });
+        }
+    }
+
+    componentDidMount() {
+        setInterval(() => this.getCountDown(), 1000);
     }
     
     render() {
+        const { days, hours, minutes, seconds } = this.state;
         return (
             <Slide left delay={1000}>
                 <div className="countdown_wrapper">
@@ -17,7 +46,7 @@ export default class CountDown extends Component {
                     <div className="countdown_bottom">
                         <div className="countdown_item">
                             <div className="countdown_time">
-                                23
+                                {days}
                             </div>
                             <div className="countdown_tag">
                                 Days
@@ -25,7 +54,7 @@ export default class CountDown extends Component {
                         </div>
                         <div className="countdown_item">
                             <div className="countdown_time">
-                                2
+                                {hours}
                             </div>
                             <div className="countdown_tag">
                                 Hs
@@ -33,7 +62,7 @@ export default class CountDown extends Component {
                         </div>
                         <div className="countdown_item">
                             <div className="countdown_time">
-                                20
+                                {minutes}
                             </div>
                             <div className="countdown_tag">
                                 Min
@@ -41,7 +70,7 @@ export default class CountDown extends Component {
                         </div>
                         <div className="countdown_item">
                             <div className="countdown_time">
-                                40
+                                {seconds}
                             </div>
                             <div className="countdown_tag">
                                 Sec
